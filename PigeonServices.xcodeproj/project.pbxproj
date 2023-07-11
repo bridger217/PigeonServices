@@ -13,6 +13,9 @@
 		F41DB8932A4CF80F007D9864 /* PigeonServices.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F41DB8912A4CF80F007D9864 /* PigeonServices.xcdatamodeld */; };
 		F41DB8952A4CF811007D9864 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F41DB8942A4CF811007D9864 /* Assets.xcassets */; };
 		F41DB8982A4CF811007D9864 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F41DB8962A4CF811007D9864 /* LaunchScreen.storyboard */; };
+		F423571D2A5C989100394C13 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F423571C2A5C989100394C13 /* TabBarViewController.swift */; };
+		F423571F2A5CEE9900394C13 /* TodaysPictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F423571E2A5CEE9900394C13 /* TodaysPictureViewController.swift */; };
+		F42357212A5CEFC700394C13 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42357202A5CEFC700394C13 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		F41DB8942A4CF811007D9864 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F41DB8972A4CF811007D9864 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F41DB8992A4CF811007D9864 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F423571C2A5C989100394C13 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		F423571E2A5CEE9900394C13 /* TodaysPictureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaysPictureViewController.swift; sourceTree = "<group>"; };
+		F42357202A5CEFC700394C13 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +62,34 @@
 		F41DB8872A4CF80F007D9864 /* PigeonServices */ = {
 			isa = PBXGroup;
 			children = (
+				F41DB8992A4CF811007D9864 /* Info.plist */,
+				F423571B2A5C984400394C13 /* Resources */,
+				F423571A2A5C983800394C13 /* Controllers */,
+			);
+			path = PigeonServices;
+			sourceTree = "<group>";
+		};
+		F423571A2A5C983800394C13 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F423571C2A5C989100394C13 /* TabBarViewController.swift */,
+				F423571E2A5CEE9900394C13 /* TodaysPictureViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		F423571B2A5C984400394C13 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
 				F41DB8882A4CF80F007D9864 /* AppDelegate.swift */,
 				F41DB88A2A4CF80F007D9864 /* SceneDelegate.swift */,
 				F41DB88C2A4CF80F007D9864 /* ViewController.swift */,
 				F41DB8942A4CF811007D9864 /* Assets.xcassets */,
 				F41DB8962A4CF811007D9864 /* LaunchScreen.storyboard */,
-				F41DB8992A4CF811007D9864 /* Info.plist */,
 				F41DB8912A4CF80F007D9864 /* PigeonServices.xcdatamodeld */,
+				F42357202A5CEFC700394C13 /* Constants.swift */,
 			);
-			path = PigeonServices;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,8 +163,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F41DB88D2A4CF80F007D9864 /* ViewController.swift in Sources */,
+				F423571F2A5CEE9900394C13 /* TodaysPictureViewController.swift in Sources */,
 				F41DB8932A4CF80F007D9864 /* PigeonServices.xcdatamodeld in Sources */,
 				F41DB8892A4CF80F007D9864 /* AppDelegate.swift in Sources */,
+				F42357212A5CEFC700394C13 /* Constants.swift in Sources */,
+				F423571D2A5C989100394C13 /* TabBarViewController.swift in Sources */,
 				F41DB88B2A4CF80F007D9864 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
