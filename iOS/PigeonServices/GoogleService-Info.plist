@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>549635824719-tjc8hfnkk5rn7j0rugbuhndjenigi2bi.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.549635824719-tjc8hfnkk5rn7j0rugbuhndjenigi2bi</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAMQGQwgxJGYRVsrFfIhtRMNN7tP-m62kE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>549635824719</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>BridgeDudley.PigeonServices</string>
+	<key>PROJECT_ID</key>
+	<string>pigeonservices-38c30</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pigeonservices-38c30.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:549635824719:ios:f33557a630fbb8c5e4de3a</string>
+</dict>
+</plist>
