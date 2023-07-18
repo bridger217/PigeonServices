@@ -43,4 +43,8 @@ class TabBarViewController: UITabBarController {
         
         self.tabBar.tintColor = .systemPink
     }
+    
+    func getTodaysMemoryVC() -> TodaysMemoryViewController? {
+        return (self.viewControllers?[0] as? UINavigationController)?.topViewController as? TodaysMemoryViewController
+    }
 }

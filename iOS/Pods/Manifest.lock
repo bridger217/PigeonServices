@@ -745,6 +745,16 @@ PODS:
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
+  - OneSignalXCFramework (3.12.5):
+    - OneSignalXCFramework/OneSignalCore (= 3.12.5)
+    - OneSignalXCFramework/OneSignalExtension (= 3.12.5)
+    - OneSignalXCFramework/OneSignalOutcomes (= 3.12.5)
+  - OneSignalXCFramework/OneSignalCore (3.12.5)
+  - OneSignalXCFramework/OneSignalExtension (3.12.5):
+    - OneSignalXCFramework/OneSignalCore
+    - OneSignalXCFramework/OneSignalOutcomes
+  - OneSignalXCFramework/OneSignalOutcomes (3.12.5):
+    - OneSignalXCFramework/OneSignalCore
   - PromisesObjC (2.2.0)
   - SDWebImage (5.16.0):
     - SDWebImage/Core (= 5.16.0)
@@ -755,6 +765,7 @@ DEPENDENCIES:
   - FirebaseFirestoreSwift
   - FirebaseStorage
   - FirebaseStorageUI
+  - OneSignalXCFramework (< 4.0, >= 3.0.0)
 
 SPEC REPOS:
   trunk:
@@ -776,6 +787,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
+    - OneSignalXCFramework
     - PromisesObjC
     - SDWebImage
 
@@ -798,9 +810,10 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  OneSignalXCFramework: 4afdd14f6fa769eadf141209037e3eac5890beb9
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   SDWebImage: 2aea163b50bfcb569a2726b6a754c54a4506fcf6
 
-PODFILE CHECKSUM: cf2e32f40960e0f5efee4049df33f0a85b330652
+PODFILE CHECKSUM: 8266e5970e3f912d7de4dee2474069cb160b6d2b
 
 COCOAPODS: 1.12.1

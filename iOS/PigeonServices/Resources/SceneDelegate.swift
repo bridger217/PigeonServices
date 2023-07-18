@@ -22,6 +22,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = vc
         self.window = window
     }
+    
+    static func shared() -> SceneDelegate? {
+        return UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+    }
+    
+    func getTabBarVC() -> TabBarViewController? {
+        return self.window?.rootViewController as? TabBarViewController
+    }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

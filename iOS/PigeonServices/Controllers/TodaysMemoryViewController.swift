@@ -48,6 +48,7 @@ class TodaysMemoryViewController: UIViewController {
         view.textColor = .darkGray
         view.font = .systemFont(ofSize: 16)
         view.alpha = 0
+        view.isEditable = false
         return view
     }()
     
@@ -98,6 +99,12 @@ class TodaysMemoryViewController: UIViewController {
         return label
     }()
     
+    let activityIndicatorView: UIActivityIndicatorView = {
+        let indicatorView = UIActivityIndicatorView(style: .gray)
+        indicatorView.hidesWhenStopped = true
+        return indicatorView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
@@ -114,7 +121,7 @@ class TodaysMemoryViewController: UIViewController {
             self.openMemoryView,
             self.pigeonView
         ]
-//        configureSettingsButton()
+        //        configureSettingsButton()
         refreshMemory()
         addTargets()
     }
@@ -128,13 +135,21 @@ class TodaysMemoryViewController: UIViewController {
         view.addSubview(bubbleView)
         bubbleView.addSubview(bubbleTextLabel)
         noteScrollView.addSubview(noteView)
+        view.addSubview(activityIndicatorView)
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicatorView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)
+        ])
     }
     
     func refreshMemory() {
+        activityIndicatorView.startAnimating()
         MemoryManager.shared.getTodaysMemory { [weak self] mem in
             guard let self = self else { return }
             guard let mem = mem else {
                 self.alertError()
+                self.activityIndicatorView.stopAnimating()
                 return
             }
             self.memory = mem
@@ -147,6 +162,7 @@ class TodaysMemoryViewController: UIViewController {
                 self.fadeViews(self.veilViews, fadeIn: true)
                 self.fadeViews(self.memoryViews, fadeIn: false)
             }
+            self.activityIndicatorView.stopAnimating()
         }
     }
     
@@ -186,6 +202,8 @@ class TodaysMemoryViewController: UIViewController {
     func addTargets() {
         let unveilTap = UITapGestureRecognizer(target: self, action: #selector(revealMemory))
         openMemoryView.addGestureRecognizer(unveilTap)
+        let swipeGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
+        self.view.addGestureRecognizer(swipeGestureRecognizer)
     }
     
     @objc func fadeViews(_ views: [UIView], fadeIn: Bool) {
@@ -214,6 +232,17 @@ class TodaysMemoryViewController: UIViewController {
             }
         }
     }
+    
+    @objc func handleSwipeGesture(_ gestureRecognizer: UIPanGestureRecognizer) {
+        let translation = gestureRecognizer.translation(in: view)
+        
+        if gestureRecognizer.state == .ended {
+            if translation.y > 100 { // Adjust the threshold to your preference
+                refreshMemory()
+            }
+        }
+    }
+    
     
     @objc func settingsButtonTappes() {
         print("hi")
