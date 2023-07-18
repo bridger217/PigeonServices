@@ -13,6 +13,7 @@ class TodaysMemoryViewController: UIViewController {
     var memory: Memory?
     var memoryViews: [UIView] = []
     var veilViews: [UIView] = []
+    var providedMemory = false
     
     let imageView: UIImageView = {
         let view = UIImageView()
@@ -105,6 +106,11 @@ class TodaysMemoryViewController: UIViewController {
         return indicatorView
     }()
     
+    func configure(memory: Memory) {
+        self.memory = memory
+        providedMemory = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
@@ -144,15 +150,8 @@ class TodaysMemoryViewController: UIViewController {
     }
     
     func refreshMemory() {
-        activityIndicatorView.startAnimating()
-        MemoryManager.shared.getTodaysMemory { [weak self] mem in
+        let memoryController: (Memory) -> Void = { [weak self] mem in
             guard let self = self else { return }
-            guard let mem = mem else {
-                self.alertError()
-                self.activityIndicatorView.stopAnimating()
-                return
-            }
-            self.memory = mem
             self.imageView.setImageFromStorage(path: mem.imagePath)
             self.noteView.text = mem.message
             if mem.seen {
@@ -162,6 +161,21 @@ class TodaysMemoryViewController: UIViewController {
                 self.fadeViews(self.veilViews, fadeIn: true)
                 self.fadeViews(self.memoryViews, fadeIn: false)
             }
+        }
+        if providedMemory {
+            memoryController(self.memory!)
+            return
+        }
+        activityIndicatorView.startAnimating()
+        MemoryManager.shared.getTodaysMemory { [weak self] mem in
+            guard let self = self else { return }
+            guard let mem = mem else {
+                self.alertError()
+                self.activityIndicatorView.stopAnimating()
+                return
+            }
+            self.memory = mem
+            memoryController(mem)
             self.activityIndicatorView.stopAnimating()
         }
     }

@@ -47,7 +47,6 @@ class MemoryManager {
                         memories.append(memory)
                     } catch let error as NSError {
                         print("Error parsing memory: \(error.localizedDescription)")
-                        return completion(nil)
                     }
                 }
                 completion(memories)

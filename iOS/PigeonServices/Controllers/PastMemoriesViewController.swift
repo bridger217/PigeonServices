@@ -5,109 +5,118 @@
 //  Created by Bridge Dudley on 7/12/23.
 //
 
-import Foundation
 import UIKit
+import SDWebImage
 
-class PastMemoriesViewController: UIViewController {
-    
-    private let imageCollectionView: UICollectionView = {
+class PastMemoriesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    // Define your properties here
+    private var memories: [Memory] = []
+    private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 1
+        layout.minimumLineSpacing = 1
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
         return collectionView
     }()
     
-    private var memories: [Memory] = []
     private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         
-//        title = "Image Grid"
+        // Configure the collection view
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(MemoryCell.self, forCellWithReuseIdentifier: "MemoryCell")
         
-        imageCollectionView.delegate = self
-        imageCollectionView.dataSource = self
-        imageCollectionView.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.reuseIdentifier)
+        // Add the collection view to the view controller's view
+        view.addSubview(collectionView)
         
-        view.addSubview(imageCollectionView)
+        // Configure constraints for the collection view
         NSLayoutConstraint.activate([
-            imageCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            imageCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            imageCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            imageCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
-        // Add the refresh control to the collection view
-        if #available(iOS 10.0, *) {
-            imageCollectionView.refreshControl = refreshControl
-        } else {
-            imageCollectionView.addSubview(refreshControl)
-        }
+        // Configure the refresh control
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        collectionView.refreshControl = refreshControl
         
-        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        
-        fetchData()
+        // Fetch past memories
+        fetchPastMemories()
     }
     
-    @objc private func refreshData() {
-        fetchData()
+    @objc private func refresh() {
+        fetchPastMemories()
     }
     
-    private func fetchData() {
+    func fetchPastMemories() {
         MemoryManager.shared.getPastMemories { [weak self] memories in
             DispatchQueue.main.async {
                 self?.memories = memories ?? []
-                self?.imageCollectionView.reloadData()
-                self?.refreshControl.endRefreshing() // End the refreshing animation
+                self?.collectionView.reloadData()
+                self?.refreshControl.endRefreshing()
             }
         }
     }
-}
-
-extension PastMemoriesViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    
+    // MARK: - UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return memories.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.reuseIdentifier, for: indexPath) as? ImageCell else {
-            return UICollectionViewCell()
-        }
-        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MemoryCell", for: indexPath) as! MemoryCell
         let memory = memories[indexPath.item]
         cell.imageView.setImageFromStorage(path: memory.imagePath)
-        
         return cell
     }
     
+    // MARK: - UICollectionViewDelegateFlowLayout
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let padding: CGFloat = 10
-        let collectionViewWidth = collectionView.bounds.width
-        let itemWidth = (collectionViewWidth - padding) / 2
-        return CGSize(width: itemWidth, height: itemWidth)
+        let itemSize = (collectionView.bounds.width - 2) / 3
+        return CGSize(width: itemSize, height: itemSize)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let memory = memories[indexPath.item]
+        let memoryViewController = TodaysMemoryViewController()
+        memoryViewController.configure(memory: memory)
+        navigationController?.pushViewController(memoryViewController, animated: true)
     }
 }
 
-class ImageCell: UICollectionViewCell {
-    
-    static let reuseIdentifier = "ImageCell"
-    
+class MemoryCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        // Add the image view to the cell's content view
         contentView.addSubview(imageView)
+        
+        // Configure constraints for the image view
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -116,7 +125,12 @@ class ImageCell: UICollectionViewCell {
         ])
     }
     
-    required init?(coder: NSCoder) {
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
