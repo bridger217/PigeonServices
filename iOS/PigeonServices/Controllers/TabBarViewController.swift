@@ -47,4 +47,8 @@ class TabBarViewController: UITabBarController {
     func getTodaysMemoryVC() -> TodaysMemoryViewController? {
         return (self.viewControllers?[0] as? UINavigationController)?.topViewController as? TodaysMemoryViewController
     }
+    
+    func getPastMemoriesVC() -> PastMemoriesViewController? {
+        return (self.viewControllers?[1] as? UINavigationController)?.topViewController as? PastMemoriesViewController
+    }
 }

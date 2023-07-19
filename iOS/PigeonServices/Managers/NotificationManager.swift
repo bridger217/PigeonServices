@@ -24,10 +24,12 @@ class NotificationManager {
             return
         }
         SceneDelegate.shared()?.getTabBarVC()?.getTodaysMemoryVC()?.refreshMemory()
+        SceneDelegate.shared()?.getTabBarVC()?.getPastMemoriesVC()?.refresh()
     }
     
     private let notificationWillShowInForegroundBlock: OSNotificationWillShowInForegroundBlock = { notification, completion in
         SceneDelegate.shared()?.getTabBarVC()?.getTodaysMemoryVC()?.refreshMemory()
+        SceneDelegate.shared()?.getTabBarVC()?.getPastMemoriesVC()?.refresh()
         completion(notification)
     }
 }

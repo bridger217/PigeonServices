@@ -52,7 +52,7 @@ class PastMemoriesViewController: UIViewController, UICollectionViewDataSource, 
         fetchPastMemories()
     }
     
-    @objc private func refresh() {
+    @objc func refresh() {
         fetchPastMemories()
     }
     
