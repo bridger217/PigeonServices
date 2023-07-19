@@ -26,6 +26,7 @@ class PastMemoriesViewController: UIViewController, UICollectionViewDataSource, 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        configureNavBar()
         
         // Configure the collection view
         collectionView.dataSource = self
@@ -99,6 +100,28 @@ class PastMemoriesViewController: UIViewController, UICollectionViewDataSource, 
         memoryViewController.configure(memory: memory)
         navigationController?.pushViewController(memoryViewController, animated: true)
     }
+    
+    private func configureNavBar() {
+        // Create the logo image view and set the image
+        let logoImageView = UIImageView(image: UIImage(named: "pigeon-wide-2"))
+        logoImageView.contentMode = .scaleAspectFit // Adjust this to your needs
+        
+        // Add the logo image view to the view hierarchy
+        view.addSubview(logoImageView)
+        logoImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Set up constraints to position the logo at the top center of the screen
+        NSLayoutConstraint.activate([
+            // Center the logo horizontally in the superview
+            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            // Set the top constraint to a value that positions the logo above the safe area
+            logoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10), // You can adjust the constant to your desired position
+            // Set the width of the logo image view
+            logoImageView.widthAnchor.constraint(equalToConstant: 140), // Adjust the width to your desired size
+            // Set the height of the logo image view
+            logoImageView.heightAnchor.constraint(equalToConstant: 100) // Adjust the height to your desired size
+        ])
+    }
 }
 
 class MemoryCell: UICollectionViewCell {
@@ -133,4 +156,5 @@ class MemoryCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }

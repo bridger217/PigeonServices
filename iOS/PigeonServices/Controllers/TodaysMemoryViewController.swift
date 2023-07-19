@@ -127,7 +127,7 @@ class TodaysMemoryViewController: UIViewController {
             self.openMemoryView,
             self.pigeonView
         ]
-        //        configureSettingsButton()
+        configureNavBar()
         refreshMemory()
         addTargets()
     }
@@ -184,7 +184,7 @@ class TodaysMemoryViewController: UIViewController {
         super.viewDidLayoutSubviews()
         let imageWidth: CGFloat = view.frame.width - UI_SIDE_INSET*4
         let imageHeight: CGFloat = 400
-        self.imageView.frame = CGRect(x: UI_SIDE_INSET*2, y: view.safeAreaInsets.bottom + UI_SIDE_INSET, width: imageWidth, height: imageHeight)
+        self.imageView.frame = CGRect(x: UI_SIDE_INSET*2, y: view.safeAreaInsets.bottom + 25, width: imageWidth, height: imageHeight)
         let backgroundWidth = imageWidth*1.07
         let backgroundHeight = imageHeight*1.07
         self.imageBackground.frame = CGRect(x: imageView.frame.minX-(backgroundWidth-imageWidth)/2, y: imageView.frame.minY-(backgroundHeight-imageHeight)/2, width: backgroundWidth, height: backgroundHeight)
@@ -206,11 +206,6 @@ class TodaysMemoryViewController: UIViewController {
         self.bubbleView.frame = CGRect(x: UI_SIDE_INSET*2, y: view.safeAreaInsets.top + 5, width: bubbleSize.width, height: bubbleSize.height)
         
         self.bubbleTextLabel.frame = CGRect(x: 25, y: -10, width: bubbleSize.width, height: bubbleSize.height)
-    }
-    
-    func configureSettingsButton() {
-        let settingsButton = UIBarButtonItem(image: UIImage(named: "line.3.horizontal"), style: .plain, target: self, action: #selector(settingsButtonTappes))
-        navigationItem.rightBarButtonItem = settingsButton
     }
     
     func addTargets() {
@@ -267,6 +262,28 @@ class TodaysMemoryViewController: UIViewController {
                                       message: "Sorry babe ;(", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
         self.present(alert, animated: true)
+    }
+    
+    private func configureNavBar() {
+        // Create the logo image view and set the image
+        let logoImageView = UIImageView(image: UIImage(named: "pigeon-wide-2"))
+        logoImageView.contentMode = .scaleAspectFit // Adjust this to your needs
+        
+        // Add the logo image view to the view hierarchy
+        view.addSubview(logoImageView)
+        logoImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Set up constraints to position the logo at the top center of the screen
+        NSLayoutConstraint.activate([
+            // Center the logo horizontally in the superview
+            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            // Set the top constraint to a value that positions the logo above the safe area
+            logoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10), // You can adjust the constant to your desired position
+            // Set the width of the logo image view
+            logoImageView.widthAnchor.constraint(equalToConstant: 140), // Adjust the width to your desired size
+            // Set the height of the logo image view
+            logoImageView.heightAnchor.constraint(equalToConstant: 100) // Adjust the height to your desired size
+        ])
     }
     
 }

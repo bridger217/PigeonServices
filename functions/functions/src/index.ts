@@ -7,7 +7,7 @@ admin.initializeApp();
 
 export const changeMemory = functions.pubsub
 // .schedule("0 9 * * *")
-  .schedule("every 1 minutes")
+  .schedule("every 10 minutes")
   .timeZone("America/New_York")
   .onRun(async (context) => {
     const minDelay = 0; // Minimum delay in minutes
